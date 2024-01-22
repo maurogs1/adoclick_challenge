@@ -1,0 +1,78 @@
+
+<div *ngIf="loading" class="loading-overlay">
+  <!-- Spinner de Bootstrap -->
+  <div class="spinner-border text-light" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+  <h1>Product List</h1>
+  <div *ngIf="categories.length > 0" class="d-flex align-items-center gap-3 mb-3">
+    <div class="d-flex gap-3 align-items-center ">
+      <div>
+        <label>Category:</label>
+      </div>
+      <div>
+        <select
+          id="categorySelect"
+          class="form-control"
+          [(ngModel)]="selectedCategory"
+          (change)="getProductsByCategory()"      >
+          <option value="">All</option>
+          <option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="d-flex gap-3 align-items-center">
+      <div>
+        <label>Limit: </label>
+      </div>
+      <div>
+        <select id="limitSelect" class="form-control" [(ngModel)]="selectedLimit" (change)="getProductsByCategory()"
+        >
+          <option *ngFor="let limit of limits" [value]="limit">
+            {{ limit }}
+          </option>
+          
+        </select>
+  
+      </div>
+    </div>
+  </div>
+  
+  
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 responsive-table">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let product">{{ product.id }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Title</th>
+      <td mat-cell *matCellDef="let product">{{ product.title }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef>Category</th>
+      <td mat-cell *matCellDef="let product">{{ product.category }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>Price</th>
+      <td mat-cell *matCellDef="let product">{{ product.price }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let product">
+        <button class="btn btn-success" (click)="openModal(product.id)">
+          open
+        </button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  

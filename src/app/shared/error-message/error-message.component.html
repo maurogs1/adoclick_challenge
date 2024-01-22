@@ -1,0 +1,17 @@
+<div *ngIf="control">
+  <div
+    *ngIf="control?.invalid && (control?.dirty || control?.touched)"
+    class="text-danger"
+  >
+    <div *ngFor="let validation of validations">
+      <div *ngIf="control?.hasError(validation.name)">
+        {{ validation.message }}
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="message != ''">
+  <p class="text-danger text-left">
+    {{ message }}
+  </p>
+</div>
